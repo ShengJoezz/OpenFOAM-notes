@@ -540,7 +540,11 @@ someAttributes
 
 <img src="C:\Users\Administrator\Desktop\OpenFOAM学习\blockMesh.jpg" alt="blockMesh" style="zoom:80%;" />
 
-* `convertToMeters`:这是一个缩放因子，因为`openFOAM`中默认的单位都是一米，因此如果我们对网格的顶点坐标的长度的单位要求为厘米，那我们就可以用`convertToMeters 0.01`
+![cavity算例的blockMeshDict介绍](C:\Users\Administrator\Desktop\OpenFOAM学习\cavity算例的blockMeshDict介绍.jpg)
+
+![边界条件说明](C:\Users\Administrator\Desktop\OpenFOAM学习\边界条件说明.jpg)
+
+* `convertToMeters`:这是一个缩放因子，因为`openFOAM`中默认的单位都是一米，因此如果我们对网格的顶点坐标的长度的单位要求为厘米，那我们就可以用`convertToMeters 0.01`,也就是把整个图的比例尺放缩一下
 
 * `vertices(中文为顶点)`:这是一个顶点坐标的列表，而列表的列出是需要遵循右手法则的(点的列出是不需要的，但是考虑到在后面`blocks`中需要使用右手法则制造块，所以还是需要考虑使用这方面的内容)
 
@@ -719,3 +723,24 @@ someAttributes
 
     - **作用**：定义每个网格单元的几何形状或体积信息。在一些复杂的非结构化网格中，`cells` 文件会被用来明确每个网格单元的几何信息。
 
+# 三.0文件夹
+
+![cavity算例图](C:\Users\Administrator\Desktop\OpenFOAM学习\cavity算例图.jpg)
+
+ 我们在[关于几何边界条件的解读中](#joe的解读(blockMeshDict))，提到过:**边界条件分为两种，一种为物理边界条件，一种为几何边界条件**，在`system/blockMeshDict`文件中，我们提到过限制边界条件，尤其是对于固定界面:`fixedWall`，可动界面`movingWall`，前后界面等等`frontAndBack`。而对于相应的数据，我们也应该做相应的物理因素的确定。
+
+比如说`U`文件:
+
+![U文件的量纲说明](C:\Users\Administrator\Desktop\OpenFOAM学习\U文件的量纲说明.jpg)
+
+其中`dimensions`是物理学的七大量纲，通过组合我们能够得到所有量纲。
+
+第二个`internalField`是指内部场，这个uniform(0 0 0)代表x y z方向的内部场速度分量都是0.
+
+其中地下的`boundaryFiled`就是边界场的内容了，这必须要与`blockMeshDict`中规定的几何边界的名称与内容相同
+
+我们再来看`p`文件
+
+![p文件的内容1](C:\Users\Administrator\Desktop\OpenFOAM学习\p文件的内容1.jpg)
+
+![p文件的内容2](C:\Users\Administrator\Desktop\OpenFOAM学习\p文件的内容2.jpg)
